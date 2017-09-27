@@ -10,6 +10,7 @@ import reducer from './reducers';
 import App     from './components/App';
 import Login   from './components/Login';
 import User    from './components/User';
+import Songs   from './components/Songs';
 import Error   from './components/Error';
 
 // load our css. there probably is a better way to do this
@@ -31,7 +32,7 @@ class Root extends Component {
         <Router history={hashHistory}>
           <Route path="/" component={App}>
             <IndexRoute component={Login} />
-            <Route path="/user/:accessToken/:refreshToken" component={User} />
+            <Route path="/user/:accessToken/:refreshToken" component={Songs} />
             <Route path="/error/:errorMsg" component={Error} />
           </Route>
         </Router>
@@ -43,3 +44,6 @@ class Root extends Component {
 // render town
 const rootElement = document.getElementById('root');
 render(<Root />, rootElement);
+
+
+//<Route path="/user/:accessToken/:refreshToken" component={User} />

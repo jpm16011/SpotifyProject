@@ -1,5 +1,6 @@
 import {
-  SPOTIFY_TOKENS, SPOTIFY_ME_BEGIN, SPOTIFY_ME_SUCCESS, SPOTIFY_ME_FAILURE
+  SPOTIFY_TOKENS, SPOTIFY_ME_BEGIN, SPOTIFY_ME_SUCCESS, SPOTIFY_ME_FAILURE, 
+  SPOTIFY_MY_SONGS, SPOTIFY_MY_SONGS_SUCCESS, SPOTIFY_MY_SONGS_FAILURE
 } from '../actions/actions';
 
 /** The initial state; no tokens and no user info */
@@ -19,6 +20,14 @@ const initialState = {
     product: null,
     type: null,
     uri: null,
+  },
+  songs : {
+    href: null, 
+    items: {}, 
+    limit: null, 
+    offset: null, 
+    previous: null, 
+    total: null
   }
 };
 
@@ -40,6 +49,7 @@ export default function reduce(state = initialState, action) {
 
   // when we get the data merge it in
   case SPOTIFY_ME_SUCCESS:
+    //console.log(state.accessToken);
     return Object.assign({}, state, {
       user: Object.assign({}, state.user, action.data, {loading: false})
     });
@@ -47,6 +57,14 @@ export default function reduce(state = initialState, action) {
   // currently no failure state :(
   case SPOTIFY_ME_FAILURE:
     return state;
+  case SPOTIFY_MY_SONGS_SUCCESS:
+    //console.log(action.data);
+    return Object.assign({}, state, {
+      songs: Object.assign({}, state.songs, action.data)
+    });
+  case SPOTIFY_MY_SONGS_FAILURE:
+    return state; 
+
 
   default:
     return state;

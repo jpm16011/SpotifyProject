@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config({path: __dirname + '/.env'});
 const Spotify = require('spotify-web-api-node');
 const querystring = require('querystring');
 const express = require('express');
@@ -11,7 +11,7 @@ const CLIENT_SECRET = process.env.client_secret;
 const REDIRECT_URI = process.env.redirect_uri || 'http://localhost:3000/callback';
 const STATE_KEY = 'spotify_auth_state';
 // your application requests authorization
-const scopes = ['user-read-private', 'user-read-email'];
+const scopes = ['user-read-private', 'user-read-email', 'user-library-read'];
 
 // configure spotify
 const spotifyApi = new Spotify({
@@ -58,9 +58,9 @@ router.get('/callback', (req, res) => {
       spotifyApi.setRefreshToken(refresh_token);
 
       // use the access token to access the Spotify Web API
-      spotifyApi.getMe().then(({ body }) => {
+      /*spotifyApi.getMe().then(({ body }) => {
         console.log(body);
-      });
+      });*/
 
       // we can also pass the token to the browser to make requests from there
       res.redirect(`/#/user/${access_token}/${refresh_token}`);
