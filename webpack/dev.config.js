@@ -18,8 +18,9 @@ module.exports = {
       { test: /\.svg$/, loaders: ['raw-loader']},
       // take all less files, compile them, and bundle them in with our js bundle
       { test: /\.less$/, loader: 'style!css!autoprefixer?browsers=last 2 version!less' },
+      { test: /\.css$/, loaders: [ 'style-loader', 'css-loader' ] },
       {
-        test: /\.js$/,
+        test: /\.js|.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {

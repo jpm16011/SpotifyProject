@@ -2,8 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
+  entry: ['babel-polyfill',
     path.join(__dirname, '../client/index'),
   ],
   output: {
@@ -16,8 +15,9 @@ module.exports = {
       { test: /\.svg$/, loaders: ['raw-loader']},
       // take all less files, compile them, and bundle them in with our js bundle
       { test: /\.less$/, loader: 'style!css!autoprefixer?browsers=last 2 version!less' },
+      { test: /\.css$/, loaders: [ 'style-loader', 'css-loader' ] },
       {
-        test: /\.js$/,
+        test: /\.js|.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
@@ -36,6 +36,7 @@ module.exports = {
     // optimizations
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
